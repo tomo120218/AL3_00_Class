@@ -15,7 +15,7 @@ private:
 	uint32_t textureHandle_ = 0u;
 
 public:
-	void Initialize(Model* model, uint32_t textureHandle);
+	void Initialize();
 	void Update();
 	void Draw();
 };
