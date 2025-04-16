@@ -1,5 +1,6 @@
 #pragma once
 #include "KamataEngine.h"
+#include "Player.h"
 
 // ゲームシーン
 class GameScene {
@@ -19,6 +20,9 @@ class GameScene {
 	    KamataEngine::Camera camera_;
 
 		~GameScene();
+
+		// 自キャラ
+	    Player* player_ = nullptr;
 
 		// 初期化
 	    void Initialize();

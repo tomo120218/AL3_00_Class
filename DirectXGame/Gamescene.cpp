@@ -2,7 +2,10 @@
 using namespace KamataEngine;
 
 GameScene::~GameScene() { 
-	delete model_; 
+	delete model_;
+
+	// 自キャラの解放
+	delete player_;
 }
 
 void GameScene::Initialize() {
@@ -18,11 +21,17 @@ void GameScene::Initialize() {
 
 	// カメラの初期化
 	camera_.Initialize();
+
+	// 自キャラの生成
+	player_ = new Player();
+
+	// 自キャラの初期化
+	player_->Initialize();
 }
 
 void GameScene::Update() {
-
-
+	// 自キャラの更新
+	player_->Update();
 }
 
 void GameScene::Draw() {
@@ -38,4 +47,7 @@ void GameScene::Draw() {
 
 	// eDモデル描画後処理
 	Model::PostDraw();
+
+	// 自キャラの描画
+	player_->Draw();
 }
