@@ -1,7 +1,7 @@
 #include "Gamescene.h"
 using namespace KamataEngine;
 
-GameScene::~GameScene() { 
+GameScene::~GameScene() {
 	delete model_;
 
 	// 自キャラの解放
@@ -26,7 +26,7 @@ void GameScene::Initialize() {
 	player_ = new Player();
 
 	// 自キャラの初期化
-	player_->Initialize();
+	player_->Initialize(model_, textureHandle_, &camera_);
 }
 
 void GameScene::Update() {
@@ -43,11 +43,10 @@ void GameScene::Draw() {
 
 	// 3Dモデル
 	model_->Draw(worldTransform_, camera_, textureHandle_);
-	
-
-	// eDモデル描画後処理
-	Model::PostDraw();
 
 	// 自キャラの描画
 	player_->Draw();
+
+	// eDモデル描画後処理
+	Model::PostDraw();
 }

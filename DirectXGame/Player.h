@@ -14,8 +14,10 @@ private:
 	// テキスチャハンドル
 	uint32_t textureHandle_ = 0u;
 
+	KamataEngine::Camera* camera_ = nullptr;
+
 public:
-	void Initialize();
 	void Update();
 	void Draw();
+	void Initialize(KamataEngine::Model* model, uint32_t textureHandle, KamataEngine::Camera* camera);
 };
