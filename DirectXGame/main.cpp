@@ -9,39 +9,30 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	// エンジンの初期化
 	KamataEngine::Initialize(L"LE2D_18_ビョウドウ_トモヒロ_AL3");
 
-	// DirectXCommonインスタンスの取得
 	DirectXCommon* dxCommon = DirectXCommon::GetInstance();
 
-	// ゲームシーンのインスタンス作成
 	GameScene* gameScene = new GameScene();
 
-	// ゲームシーンの初期化
-	gameScene->Initialize();
+	gameScene->Intialize();
 
-	// メインループ
+	// エンジンの更新
 	while (true) {
-
-		// エンジンの処理
 		if (KamataEngine::Update()) {
 			break;
 		}
 
-		// ゲームシーンの更新
+		// ゲームシーンの初期化
 		gameScene->Update();
-
 		// 描画開始
 		dxCommon->PreDraw();
-
 		// ゲームシーンの描画
 		gameScene->Draw();
-
 		// 描画終了
 		dxCommon->PostDraw();
 	}
 
-	// ゲームシーンの解放
+	// ゲームシーンの開放
 	delete gameScene;
-
 	// nullptrの代入
 	gameScene = nullptr;
 
