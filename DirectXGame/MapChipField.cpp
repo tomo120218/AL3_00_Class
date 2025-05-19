@@ -1,31 +1,29 @@
 #include "MapChipField.h"
-#include <map>
 #include <fstream>
+#include <map>
 #include <sstream>
-#include <cassert>
-using namespace KamataEngine;
 
 namespace {
-std::unordered_map<std::string, MapChipType> mapChipTable = {
+
+std::map<std::string, MapChipType> mapChipTable = {
     {"0", MapChipType::kBlank},
     {"1", MapChipType::kBlock},
 };
+
 }
 
-void MapChipField::ResetMapChipData() {
-
-    // マップチップデータをリセット
+void MapChipField::ResetMapChipDate() {
+	// マップチップデータをリセット
 	mapChipData_.data.clear();
 	mapChipData_.data.resize(kNumBlockVirtical);
-	for (std::vector<MapChipType>& mapChipDataLine : mapChipData_.data) {
-		mapChipDataLine.resize(kNumBlockHorizontal);
+	for (std::vector<MapChipType>& mapChipDateLine : mapChipData_.data) {
+		mapChipDateLine.resize(kNumBlockHorizontal);
 	}
 }
 
 void MapChipField::LoadMapChipCsv(const std::string& filePath) {
-
 	// マップチップデータをリセット
-	ResetMapChipData();
+	ResetMapChipDate();
 
 	// ファイルを開く
 	std::ifstream file;
@@ -36,19 +34,16 @@ void MapChipField::LoadMapChipCsv(const std::string& filePath) {
 	std::stringstream mapChipCsv;
 	// ファイルの内容を文字列ストリームにコピー
 	mapChipCsv << file.rdbuf();
-	// ファイルを閉じる
-	file.close();
 
 	// CSVからマップチップデータを読み込む
 	for (uint32_t i = 0; i < kNumBlockVirtical; ++i) {
 		std::string line;
 		getline(mapChipCsv, line);
 
-		// 1桁分の文字列をストリームに変換して解析しやすくする
+		// 1行分の文字列をストリームに変換して解析しやすくなる
 		std::istringstream line_stream(line);
 
 		for (uint32_t j = 0; j < kNumBlockHorizontal; ++j) {
-
 			std::string word;
 			getline(line_stream, word, ',');
 
@@ -59,19 +54,14 @@ void MapChipField::LoadMapChipCsv(const std::string& filePath) {
 	}
 }
 
-MapChipType MapChipField::GetMapChipTypeByIndex(uint32_t xIndex, uint32_t yIndex) { 
-
+MapChipType MapChipField::GetMapChipTypeByIndex(uint32_t xIndex, uint32_t yIndex) {
 	if (xIndex < 0 || kNumBlockHorizontal - 1 < xIndex) {
 		return MapChipType::kBlank;
 	}
 	if (yIndex < 0 || kNumBlockVirtical - 1 < yIndex) {
-		return MapChipType::kBlock;
+		return MapChipType::kBlank;
 	}
-
 	return mapChipData_.data[yIndex][xIndex];
 }
 
-KamataEngine::Vector3 MapChipField::GetMapChipPositionByIndex(uint32_t xIndex, uint32_t yIndex) {
-	
-	return KamataEngine::Vector3(kBlockWidth * xIndex, kBlockHeight * (kNumBlockVirtical - 1 - yIndex), 0);
-}
+Vector3 MapChipField::GetMapChipPositionByIndex(uint32_t xIndex, uint32_t yIndex) { return Vector3(kBlockWidth * xIndex, kBlockHeight * (kNumBlockVirtical - 1 - yIndex), 0); }
