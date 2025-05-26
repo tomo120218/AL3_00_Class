@@ -9,10 +9,18 @@ void GameScene::Initialize() {
 
 	modelPlayer_ = Model::CreateFromOBJ("player", true);
 
+	// マップチップ
+	mapChipField_ = new MapChipField;
+	mapChipField_->LoadMapChipCsv("Resources/blocks.csv");
+
 	// 自キャラの生成
 	player_ = new Player();
+	
+	// 座標をマップチップ番号で指定
+	Vector3 playerPosition = mapChipField_->GetMapChipPositionByIndex(1, 18); // 元(1,18)
+
 	// 自キャラの初期化
-	player_->Initialize(modelPlayer_, &camera_);
+	player_->Initialize(modelPlayer_, &camera_, playerPosition);
 
 	modelSkydome_ = Model::CreateFromOBJ("skydome", true);
 
