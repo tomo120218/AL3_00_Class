@@ -45,6 +45,7 @@ private:
 	// ジャンプ初速(上方向)
 	static inline const float kJumpAccleration = 0.5f;
 
+	
 public:
 	// 初期化
 	void Initialize(Model* model, Camera* camera, const Vector3& position);
@@ -52,4 +53,6 @@ public:
 	void Update();
 	// 描画
 	void Draw();
+
+	const KamataEngine::WorldTransform& GetWorldTransform() const { return worldTransform_; }
 };

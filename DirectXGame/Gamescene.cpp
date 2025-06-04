@@ -68,6 +68,11 @@ void GameScene::Initialize() {
 
 	// デバッグ
 	debugCamera_ = new DebugCamera(1280, 720);
+
+	cameraController_ = new CameraController();
+	cameraController_->Initialize();
+	cameraController_->SetTarget(player_);
+	cameraController_->Reset();
 }
 
 GameScene::~GameScene() {
@@ -88,6 +93,8 @@ GameScene::~GameScene() {
 void GameScene::Update() {
 	player_->Update();
 	skydome_->Update();
+	debugCamera_->Update();
+	cameraController_->Update();
 	for (std::vector<WorldTransform*>& worldTransformBlockLine : worldTransformBlocks_) {
 		for (WorldTransform* worldTransformBlock : worldTransformBlockLine) {
 			if (!worldTransformBlock) {
@@ -114,6 +121,9 @@ void GameScene::Update() {
 		camera_.TransferMatrix();
 	} else {
 		camera_.UpdateMatrix();
+		camera_.matView = cameraController_->GetViewProjection().matView;
+		camera_.matProjection = cameraController_->GetViewProjection().matProjection;
+		camera_.TransferMatrix();
 	}
 
 	/*for (WorldTransform* worldTransformBlock : worldTransformBlocks_)
